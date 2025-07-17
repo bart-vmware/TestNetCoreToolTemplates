@@ -191,7 +191,8 @@ jobs:
     env:
       VSS_NUGET_URI_PREFIXES: https://pkgs.dev.azure.com/dotnet/
 
-#    steps:
+    steps:
+# TODO: Revert after testing
 #    - name: Azure login
 #      uses: azure/login@v2
 #      with:
