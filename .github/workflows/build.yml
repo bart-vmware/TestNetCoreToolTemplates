@@ -256,7 +256,7 @@ jobs:
 #      run: dotnet nuget push '${{ github.workspace }}/packages/*.nupkg' --skip-duplicate --api-key '${{ secrets.STEELTOE_NUGET_API_KEY }}' --source 'nuget.org'
 
   open_pr:
-    name: Open pull request to bump Templates version after stable release
+    name: Open pull request to bump templates version after stable release
     if: ${{ github.event_name == 'release' && !contains(github.ref_name, '-') }}
     needs: nuget-org-deploy
     timeout-minutes: 15
@@ -290,14 +290,14 @@ jobs:
         $oldVersionPrefix = '${{ env.OLD_PACKAGE_VERSION_PREFIX }}'
         $newVersionPrefix = '${{ env.NEW_PACKAGE_VERSION_PREFIX }}'
         $prBranchName = "bump-version-to-$newVersionPrefix-${{ github.run_number }}"
-        $commitMessage = "Bump Templates version from $oldVersionPrefix to $newVersionPrefix.`n`n> [!TIP] Close and reopen this pull request to run status checks."
+        $commitMessage = "Bump templates version from $oldVersionPrefix to $newVersionPrefix.`n`n> [!TIP]`n> Close and reopen this pull request to run status checks."
 
         $pattern = '(?<left>^\s*\<VersionPrefix\>)[^>]+(?<right>\<\/VersionPrefix\>)\s*$'
         $fileContent = Get-Content $env:VERSION_FILE
         $fileContent = $fileContent -Replace $pattern,"`${left}$newVersionPrefix`${right}"
         Set-Content $fileContent -Path $env:VERSION_FILE
 
-        Write-Output "Creating pull request for commit: $commitMessage"
+        Write-Output "Creating pull request with commit message:`n$commitMessage"
         git config --local user.name "github-actions[bot]"
         git config --local user.email "github-actions[bot]@users.noreply.github.com"
         git checkout -b $prBranchName
@@ -306,4 +306,4 @@ jobs:
         git push --set-upstream origin $prBranchName
 
         Write-Output "Opening pull request to merge $prBranchName."
-        gh pr create --head $prBranchName --title 'Bump Templates version' --body $commitMessage
+        gh pr create --head $prBranchName --title 'Bump templates version' --body $commitMessage
