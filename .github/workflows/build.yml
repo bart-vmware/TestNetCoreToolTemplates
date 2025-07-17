@@ -151,12 +151,13 @@ jobs:
     - name: Install code signing tool
       run: dotnet tool install --global sign --prerelease
 
-    - name: Azure login
-      uses: azure/login@v2
-      with:
-        client-id: ${{ secrets.AZURE_CLIENT_ID }}
-        tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-        subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+# TODO: Revert after testing
+#    - name: Azure login
+#      uses: azure/login@v2
+#      with:
+#        client-id: ${{ secrets.AZURE_CLIENT_ID }}
+#        tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+#        subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
 # TODO: Revert after testing
 #    - name: Sign packages
@@ -190,13 +191,13 @@ jobs:
     env:
       VSS_NUGET_URI_PREFIXES: https://pkgs.dev.azure.com/dotnet/
 
-    steps:
-    - name: Azure login
-      uses: azure/login@v2
-      with:
-        client-id: ${{ secrets.AZURE_CLIENT_ID }}
-        tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-        subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+#    steps:
+#    - name: Azure login
+#      uses: azure/login@v2
+#      with:
+#        client-id: ${{ secrets.AZURE_CLIENT_ID }}
+#        tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+#        subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
     - name: Download signed packages
       uses: actions/download-artifact@v4
